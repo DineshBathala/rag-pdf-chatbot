@@ -22,13 +22,14 @@ hallucinations and improves factual accuracy.
 ## Project Structure
 
 rag-pdf-chatbot/
-│
-├── app.py # Main application entry point
-├── requirements.txt # Project dependencies
-├── README.md # Project documentation
-│
+
+- app.py # Main application entry point
+- requirements.txt # Project dependencies
+- README.md # Project documentation
+- 
 ├── src/
-│ ├── loader.py # Loads PDF files
-│ ├── splitter.py # Splits text into chunks
-│ ├── vector_store.py # Stores and retrieves embeddings
-│ └── qa_chain.py # Question-answering logic
+- loader.py # Loads PDF files
+- splitter.py # Splits text into chunks
+- vector_store.py # Stores and retrieves embeddings
+- a_chain.py # Question-answering logic
+
