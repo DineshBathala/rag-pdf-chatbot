@@ -1,3 +1,4 @@
+
 from langchain_community.document_loaders import PyPDFLoader
 import os
 
@@ -13,3 +14,14 @@ def load_pdf(pdf_path):
 if __name__ == "__main__":
     docs = load_pdf("../data/sample.pdf")
     print(f"Loaded {len(docs)} pages")
+=======
+from langchain.document_loaders import PyPDFLoader
+
+def load_pdf(pdf_path: str):
+    """
+    Loads a PDF file and returns documents.
+    """
+    loader = PyPDFLoader(pdf_path)
+    documents = loader.load()
+    return documents
+
