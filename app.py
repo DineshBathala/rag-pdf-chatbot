@@ -1,17 +1,15 @@
 from src.loader import load_pdf
 from src.splitter import split_documents
+from src.vector_store import create_vector_store
 
-PDF_PATH = "data/sample.pdf"   # create this folder + put 1 PDF
 
 def main():
-    documents = load_pdf(PDF_PATH)
-    print(f"Loaded {len(documents)} pages")
-
+    documents = load_pdf()
     chunks = split_documents(documents)
-    print(f"Created {len(chunks)} chunks")
+    vector_store = create_vector_store(chunks)
 
-    print("\nSample chunk:\n")
-    print(chunks[0].page_content)
+    print("Vector store created successfully")
+
 
 if __name__ == "__main__":
     main()
