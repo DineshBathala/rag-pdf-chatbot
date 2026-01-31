@@ -1,15 +1,17 @@
-from src.loader import load_pdf
-from src.splitter import split_documents
-from src.vector_store import create_vector_store
-
+from src.vector_store import load_vector_store
+from src.qa_chain import create_qa_chain
 
 def main():
-    documents = load_pdf()
-    chunks = split_documents(documents)
-    vector_store = create_vector_store(chunks)
+    vector_store = load_vector_store()
+    qa = create_qa_chain(vector_store)
 
-    print("Vector store created successfully")
+    while True:
+        query = input("\nAsk a question (or type 'exit'): ")
+        if query.lower() == "exit":
+            break
 
+        result = qa.invoke({"input": query})
+        print("\nAnswer:\n", result["answer"])
 
 if __name__ == "__main__":
     main()
