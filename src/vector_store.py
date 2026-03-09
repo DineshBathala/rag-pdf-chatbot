@@ -1,18 +1,34 @@
-from langchain_community.vectorstores import FAISS
+import os
+from dotenv import load_dotenv
 from langchain_ollama import OllamaEmbeddings
+from langchain_pinecone import PineconeVectorStore
+from pinecone import Pinecone
 
-FAISS_PATH = "faiss_index"
+load_dotenv()
+
+INDEX_NAME = "rag-pdf-index"
+
 
 def create_and_save_vector_store(chunks):
-    embeddings = OllamaEmbeddings(model="mistral")
-    vector_store = FAISS.from_documents(chunks, embeddings)
-    vector_store.save_local(FAISS_PATH)
-    print("FAISS index saved to disk")
+    print("Connecting to Pinecone...")
+
+    pc = Pinecone(api_key=os.getenv("pcsk_2xTjs5_T4qjhrxmoMwbXB4Rmj3ogiVHsLCHve1VsGGFrgMvKa8g376RtEGAgxncf5Dh3gY"))
+
+    embeddings = OllamaEmbeddings(model="nomic-embed-text")
+
+    PineconeVectorStore.from_documents(
+        documents=chunks,
+        embedding=embeddings,
+        index_name=INDEX_NAME,
+    )
+
+    print("Uploaded embeddings to Pinecone")
+
 
 def load_vector_store():
-    embeddings = OllamaEmbeddings(model="mistral")
-    return FAISS.load_local(
-        FAISS_PATH,
-        embeddings,
-        allow_dangerous_deserialization=True
+    embeddings = OllamaEmbeddings(model="nomic-embed-text")
+
+    return PineconeVectorStore(
+        index_name=INDEX_NAME,
+        embedding=embeddings,
     )

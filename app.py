@@ -1,17 +1,41 @@
-from src.vector_store import load_vector_store
-from src.qa_chain import create_qa_chain
+import streamlit as st
+from langchain_ollama import OllamaEmbeddings, OllamaLLM
+from langchain_pinecone import PineconeVectorStore
+from dotenv import load_dotenv
 
-def main():
-    vector_store = load_vector_store()
-    qa = create_qa_chain(vector_store)
+load_dotenv()
 
-    while True:
-        query = input("\nAsk a question (or type 'exit'): ")
-        if query.lower() == "exit":
-            break
+st.title("📄 Chat with your PDF")
 
-        result = qa.invoke({"input": query})
-        print("\nAnswer:\n", result["answer"])
+question = st.text_input("Ask a question about your PDF:")
 
-if __name__ == "__main__":
-    main()
+if question:
+
+    embeddings = OllamaEmbeddings(model="nomic-embed-text")
+
+    vectorstore = PineconeVectorStore(
+        index_name="rag-pdf-index",
+        embedding=embeddings
+    )
+
+    retriever = vectorstore.as_retriever()
+
+    docs = retriever.invoke(question)
+
+    context = "\n".join([doc.page_content for doc in docs])
+
+    llm = OllamaLLM(model="mistral")
+
+    prompt = f"""
+    Answer the question using the context below.
+
+    Context:
+    {context}
+
+    Question:
+    {question}
+    """
+
+    response = llm.invoke(prompt)
+
+    st.write(response)
