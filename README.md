@@ -31,23 +31,23 @@ This reduces hallucinations and improves factual accuracy.
 ---
 
 ## Project Structure
+
+
 rag-pdf-chatbot/
 │
-├── app.py # Streamlit application
-├── ingest.py # Loads documents and builds embeddings
-├── requirements.txt # Project dependencies
-├── README.md # Project documentation
+├── app.py                # Streamlit application
+├── ingest.py             # Loads documents and builds embeddings
+├── requirements.txt      # Project dependencies
+├── README.md             # Project documentation
 │
-├── data/ # PDF documents
-├── faiss_index/ # Stored vector embeddings
+├── data/                 # PDF documents
+├── faiss_index/          # Stored vector embeddings
 │
 ├── src/
-│ ├── loader.py # Loads PDF files
-│ ├── splitter.py # Splits text into chunks
-│ ├── vector_store.py # Vector database logic
-│ └── qa_chain.py # Question answering pipeline
-
----
+│   ├── loader.py         # Loads PDF files
+│   ├── splitter.py       # Splits text into chunks
+│   ├── vector_store.py   # Vector database logic
+│   └── qa_chain.py       # Question answering pipeline
 
 ## How to Run the Project
 
@@ -98,4 +98,5 @@ http://localhost:8501
 
 Dinesh B  
 MTech CSE | AI & ML
+
 
